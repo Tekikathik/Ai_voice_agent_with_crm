@@ -9,11 +9,11 @@ import {
 import {
   User, Phone, BookOpen, MapPin, Brain,
   MessageSquare, Lightbulb, Download, Share2,
-  CheckCircle, ChevronRight
+  CheckCircle, ChevronRight, CalendarCheck
 } from 'lucide-react'
 import DashboardLayout from '../../components/DashboardLayout'
 import { useStore } from '../../store/useStore'
-import { analyzeCall } from '../../lib/crmApi'
+import { analyzeCall, listAppointments } from '../../lib/crmApi'
 
 import { SAGE, SAGE_DARK, SAGE_LIGHT, AMBER, AMBER_DARK, INK, INK_BODY, INK_MUTED, COLORS } from '../../theme'
 const TOOLTIP = { background: '#FFFFFF', border: '1px solid #E8E8E8', borderRadius: 10, color: INK, boxShadow: '0 8px 24px rgba(0,0,0,0.08)' }
@@ -96,6 +96,7 @@ export default function StudentReport() {
   const [loading, setLoading] = useState(true)
   const [shareToast, setShareToast] = useState(null)
   const [analyzing, setAnalyzing] = useState(false)
+  const [appts, setAppts] = useState([])
 
   // AI auto-analysis: re-run summary + disposition on this call's transcript.
   const handleAnalyze = async () => {
@@ -138,7 +139,17 @@ export default function StudentReport() {
   useEffect(() => {
     setLoading(true)
     fetchReport(callId)
-      .then(setReport)
+      .then((r) => {
+        setReport(r)
+        // Pull this student's appointments (match by phone) to show in the report.
+        const norm = (s) => String(s || '').replace(/\D/g, '').slice(-10)
+        const phone = norm(r?.profile?.phone)
+        if (phone) {
+          listAppointments({})
+            .then((all) => setAppts((all || []).filter((a) => norm(a.studentPhone) === phone)))
+            .catch(() => {})
+        }
+      })
       .catch(() => setReport(MOCK_REPORT))
       .finally(() => setLoading(false))
   }, [callId])
@@ -290,6 +301,40 @@ export default function StudentReport() {
             </div>
           </motion.div>
         </div>
+
+        {/* This student's appointments */}
+        <motion.div className="glass-card" style={{ borderRadius: 16, padding: 22, marginBottom: 16 }}
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+            <CalendarCheck size={16} color={SAGE_DARK} />
+            <span style={{ fontSize: 14, fontWeight: 600, color: INK }}>Appointments</span>
+            <span style={{ fontSize: 12, color: INK_MUTED }}>({appts.length})</span>
+          </div>
+          {appts.length === 0 ? (
+            <div style={{ fontSize: 13, color: INK_MUTED }}>No campus visits booked for this student yet.</div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {appts.map((a) => {
+                const st = { booked: '#3355BB', reminded: '#0E7C6B', visited: SAGE_DARK, no_show: '#B23B3B', cancelled: '#7A7A7A' }[a.status] || INK_MUTED
+                return (
+                  <div key={a._id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: '#FBFBFA', border: '1px solid #F1F1F1', borderRadius: 10 }}>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: INK }}>
+                        {new Date(a.scheduledFor).toLocaleDateString()} · {new Date(a.scheduledFor).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
+                      <div style={{ fontSize: 12, color: INK_MUTED }}>
+                        {(a.mode || 'campus_visit').replace(/_/g, ' ')}{a.branchId?.name ? ` · ${a.branchId.name}` : ''}
+                      </div>
+                    </div>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: st, background: st + '18', padding: '3px 10px', borderRadius: 999, textTransform: 'capitalize' }}>
+                      {String(a.status).replace(/_/g, ' ')}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: 16, marginBottom: 16 }}>
           <motion.div className="glass-card" style={{ borderRadius: 16, padding: 26 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>

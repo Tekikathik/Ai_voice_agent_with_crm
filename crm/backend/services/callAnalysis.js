@@ -26,6 +26,12 @@ const PROVIDERS = [
     apiKey:  process.env.CEREBRAS_API_KEY,
     model:   process.env.CEREBRAS_ANALYSIS_MODEL || 'gpt-oss-120b',
   },
+  {
+    name: 'openrouter',
+    baseURL: 'https://openrouter.ai/api/v1',
+    apiKey:  process.env.OPENROUTER_API_KEY,
+    model:   process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b:free',
+  },
 ].filter(p => p.apiKey)
 
 // Reasoning models (gpt-oss/glm/qwen3/deepseek) must be told to think minimally,
@@ -80,7 +86,9 @@ async function complete(p, transcriptText) {
         max_tokens: 400,
         temperature: 0.2,
         response_format: { type: 'json_object' },
-        ...reasoningParams(p.model),
+        // OpenRouter Nemotron: disable reasoning (40s+ + broken JSON otherwise);
+        // other reasoning models get effort:low via reasoningParams.
+        ...(p.name === 'openrouter' ? { reasoning: { enabled: false } } : reasoningParams(p.model)),
       }),
     })
     if (!res.ok) throw new Error(`${res.status} ${(await res.text()).slice(0, 200)}`)

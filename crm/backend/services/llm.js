@@ -17,6 +17,10 @@ function providers() {
     name: 'cerebras', baseURL: 'https://api.cerebras.ai/v1',
     apiKey: process.env.CEREBRAS_API_KEY, model: process.env.CEREBRAS_AGENTIC_MODEL || 'gpt-oss-120b',
   })
+  if (process.env.OPENROUTER_API_KEY) list.push({
+    name: 'openrouter', baseURL: 'https://openrouter.ai/api/v1',
+    apiKey: process.env.OPENROUTER_API_KEY, model: process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b:free',
+  })
   if (process.env.GEMINI_API_KEY) list.push({
     name: 'gemini', baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
     apiKey: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
@@ -48,6 +52,8 @@ async function completeJson({ system, user, maxTokens = 2200, timeoutMs = 45_000
             max_tokens: maxTokens,
             temperature: 0.4,
             response_format: { type: 'json_object' },
+            // Nemotron via OpenRouter: reasoning ON = 40s+ and mangled output; keep it off.
+            ...(p.name === 'openrouter' ? { reasoning: { enabled: false } } : {}),
           }),
         })
         if (res.status === 429 && attempt === 0) {

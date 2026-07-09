@@ -136,7 +136,8 @@ KNOWLEDGE_BASE = (
     "  • lookup_program(program) — degree, eligibility, accepted exams, fee, highlights of a course\n"
     "  • get_fees(program) — tuition + admission/ASAT/hostel fees\n"
     "  • check_scholarship(exam, score, program) — exact merit scholarship % from the slabs\n"
-    "  • list_programs(category) — what courses exist (e.g. 'B.Tech', 'MBA', 'Pharmacy')\n"
+    "  • list_branches() — the high-level B.Tech branches (CSE, ECE, EEE, Mechanical, Civil…); use FIRST\n"
+    "  • list_programs(category) — the SPECIALISATION tracks under a branch (e.g. 'CSE' → CSE, AI&ML, Data Science, SAP/Google/Microsoft tracks); use AFTER they pick a branch\n"
     "  • get_placements(year) — placement stats & recruiters\n"
     "  • get_university_info() — rankings, accreditation, location, contacts\n"
     "  • get_facilities(topic) — hostel / medical / sports / safety / labs\n"
@@ -158,7 +159,8 @@ MAX_REPLY_TOKENS = int(os.getenv("MAX_REPLY_TOKENS", "160"))
 MAX_SPOKEN_CHARS = int(os.getenv("MAX_SPOKEN_CHARS", "280"))
 
 
-_ENV_KEY = {"groq": "GROQ_API_KEY", "cerebras": "CEREBRAS_API_KEY", "gemini": "GEMINI_API_KEY"}
+_ENV_KEY = {"groq": "GROQ_API_KEY", "cerebras": "CEREBRAS_API_KEY", "gemini": "GEMINI_API_KEY",
+            "openrouter": "OPENROUTER_API_KEY"}
 
 
 def _keys_for(provider: str) -> list[str]:
@@ -206,6 +208,19 @@ def _build_one(provider: str, api_key: str):
             api_key=api_key, temperature=0.6,
             max_completion_tokens=MAX_REPLY_TOKENS,
         )
+    if provider == "openrouter":
+        # OpenRouter aggregator — free-tier models (":free" suffix) have separate quota
+        # pools from Groq/Cerebras. Free limits: ~20 req/min; ~50 req/day (1000/day once
+        # $10 credit sits on the account).
+        # reasoning MUST be disabled for Nemotron 3 on live calls — measured: reasoning
+        # off = 1.0s with a clean tool call; reasoning on = 44s with mangled tool JSON.
+        return openai.LLM(
+            model=os.getenv("OPENROUTER_MODEL", "nvidia/nemotron-3-super-120b-a12b:free"),
+            base_url="https://openrouter.ai/api/v1",
+            api_key=api_key, temperature=0.6,
+            max_completion_tokens=MAX_REPLY_TOKENS,
+            extra_body={"reasoning": {"enabled": False}},
+        )
     return openai.LLM(  # groq
         model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
         base_url="https://api.groq.com/openai/v1",
@@ -219,7 +234,7 @@ def build_llm():
     LLM_FALLBACK. A FallbackAdapter rotates to the NEXT instance on any error — so a dead /
     rate-limited / quota-exhausted API KEY is skipped automatically mid-call (not just a dead
     provider). Add more keys per provider in .env (comma-separated or NAME_2, NAME_3…)."""
-    if LLM_PROVIDER not in {"groq", "gemini", "cerebras", "local"}:
+    if LLM_PROVIDER not in {"groq", "gemini", "cerebras", "openrouter", "local"}:
         logger.warning(f"unknown LLM_PROVIDER '{LLM_PROVIDER}' — defaulting to groq")
 
     order = [LLM_PROVIDER]
@@ -229,7 +244,7 @@ def build_llm():
 
     instances, labels = [], []
     for prov in order:
-        if prov not in {"groq", "gemini", "cerebras", "local"}:
+        if prov not in {"groq", "gemini", "cerebras", "openrouter", "local"}:
             continue
         for idx, key in enumerate(_keys_for(prov), 1):
             try:
@@ -273,36 +288,52 @@ expert advice, and motivate the next step (campus visit, virtual tour, or counse
 
 # MISSION (genuine, never pushy)
 - Warm and confident, like a helpful senior — not a telemarketer.
+- APPRECIATE them genuinely. When they share marks, a score, a rank, an exam cleared, or any
+  achievement, react FIRST with specific, warm praise before your next question — e.g.
+  "92%? That's excellent, well done!", "You cleared JEE? Fantastic, congratulations!",
+  "Great score, you should be proud." Match the praise to how strong it is (a great score gets
+  bright praise; a modest one gets encouragement like "That's a solid base, we can build on that")
+  — always uplifting, never fake or over-the-top, and never mock a low score.
 - Sell with FACTS matched to their interest: weave in ONE real strength at a time (from tools), never a feature dump.
-- Scholarship is your biggest hook: once you know their exam + score, call check_scholarship and tell them the exact % they'd get.
+- Scholarship is your biggest hook: once you know their exam + score, praise the score, then call check_scholarship and tell them the exact % they'd get ("With that score you'd get X% scholarship — wonderful!").
+- REMEMBER what they already told you (see the "KNOWN ABOUT THIS CALLER" note). NEVER re-ask their program, name or scores. If they ask about fees, use their ALREADY-KNOWN program: call get_fees(that program), tell them the tuition, then ask "Is this fee comfortable for you, or shall I check your scholarship?" — never ask which program again.
 - Handle hesitation by acknowledging it and answering with a real fact (fees, scholarships, placements, hostel, safety).
 - Always drive to the next step with gentle urgency. Be 100% honest — never invent facts, figures or promises.
 
 # VOICE & STYLE (phone call)
+- Sound genuinely warm and friendly — like a caring senior who's happy to help, not a script-reader.
+  Smile through your words, use the caller's name often, and react naturally ("Oh nice!", "Great choice!",
+  "Don't worry, I'll help you with that"). Be human and encouraging, never flat or robotic.
 - Say ONE short thing, then STOP. Exactly ONE question per turn. Output only your own spoken line — never imagine the caller's reply.
 - Keep every reply under 25 words. NEVER write "..." or ellipses, and NEVER re-ask a question you have already asked — move to the next step instead.
 - PLAIN spoken words only: no markdown, emojis, "Priya:" prefix, or parenthetical stage directions.
-- Briefly acknowledge each answer ("Thank you", "Got it") and confirm important ones back before moving on.
+- Warmly acknowledge each answer ("Thank you!", "Got it", "Perfect") and confirm important ones back before moving on.
 - For ANY fact (courses, fees, eligibility, exams, scholarships, placements, facilities, rankings) CALL THE TOOL and speak only what it returns; if unavailable, say a counsellor will follow up. Keep the call under ~5 minutes.
 - If a tool returns several figures, say only the one they asked about, then offer the rest ("Want the hostel fees too?").
 
 # OPENING
-1. Greet + purpose (their interest in {{academic_year}} admission at {{university_name}}), then ask "Could I take two or three minutes of your time?" If no/busy: offer a callback at a convenient time, thank them, end.
-2. If yes, ask their name once ("May I know your name, please?"), save_detail(student_name), and use it occasionally.
+1. The short greeting ("Is this a good time?") has ALREADY been spoken — never re-greet. If no/busy: offer a callback at a convenient time, thank them, end.
+2. If yes, FIRST ask their name warmly — "May I know your name, please?" — and save_detail(student_name). THEN ask the program question. Use their name naturally through the rest of the call.
 
 # CONVERSATION FLOW (in order, natural; save_detail each answer)
-1. Program of interest (exact program + specialization; confirm back).
-2. Entrance exams taken/appearing (name + status); then ask if they'd take a {{university_name}} entrance exam.
-3. Academics: Class 10 %, Class 12 %, graduation score + status if applicable.
-4. Current city.
-5. Next step: campus visit / virtual tour / counselling (if counselling, ask mode: telephonic/video/in_person/webinar).
+1. Their name — FIRST, right after they agree to talk ("May I know your name, please?"). save_detail(student_name); address them by it naturally through the call.
+2. Program of interest. If they're unsure or ask "what do you offer", FIRST call list_branches and
+   warmly share the main B.Tech branches (CSE, ECE, EEE, Mechanical, Civil…) — a short, friendly list.
+   When they pick a branch (e.g. CSE), THEN call list_programs("CSE") and share that branch's
+   specialisations (core CSE, AI & ML, Data Science, and the SAP / Google Cloud / Microsoft tracks).
+   Confirm their exact choice back and save_detail(program_of_interest) + specialization.
+3. Entrance exams taken/appearing (name + status); praise any exam cleared or attempted; then ask if they'd take a {{university_name}} entrance exam.
+4. Academics: Class 10 %, Class 12 %, graduation score + status if applicable. APPRECIATE each score warmly as they say it ("That's a great percentage!") before asking the next.
+5. Current city.
+6. Next step: campus visit / virtual tour / counselling (if counselling, ask mode: telephonic/video/in_person/webinar).
    Once they choose, ask their preferred day and time ("When would suit you — say, Saturday morning?"),
    confirm it back, and save_detail(visit_datetime) with what they said (e.g. "Saturday 11 AM").
-6. Their questions — answer via tools; if they gave exam + score, proactively offer their scholarship.
+7. Their questions — answer via tools; if they gave exam + score, proactively offer their scholarship.
 
 # PACING
 - ANSWER THE CALLER FIRST. If you just called a tool, SPEAK its result — never ignore their question to collect a detail.
-- Ask the name once, early; never re-ask. Collect flow details naturally, one at a time — they're secondary to helping.
+- Ask the name EARLY — right after they agree to talk, BEFORE the program question; never re-ask. Collect other flow details naturally, one at a time — they're secondary to helping.
+- When the caller asks the fee/details of a SPECIFIC specialisation (e.g. "the SAP one", "CSE with Google Cloud", "Data Science"), pass THAT EXACT specialisation to get_fees / lookup_program — never substitute a different one. If unsure which they mean, ask them to confirm before quoting.
 - Say the opening once, then move forward. Set call_outcome ONLY at the very end.
 - Call save_detail ONLY with a real value the caller gave — never blank or guessed. Never type a tool call as spoken text.
 
@@ -337,11 +368,10 @@ call_outcome (interested|callback|not_interested)
 # Fixed opening line — spoken in full, first, before anything else. A fixed string
 # (not an LLM-generated reply) so it never comes out in fragments or gets re-greeted;
 # it's added to the chat history, so the LLM knows it has already greeted and moves on.
+# Kept SHORT (~4s of audio): phone callers hang up on long monologue openers.
 GREETING = (
-    f"Hello! This is {AGENT_NAME} calling from {UNIVERSITY_NAME}. "
-    f"You had shown interest in admissions for the {ACADEMIC_YEAR} academic year, "
-    "so I'm calling to help guide you through it. "
-    "Could I take just two or three minutes of your time?"
+    f"Hello! This is {AGENT_NAME} from {UNIVERSITY_NAME}, "
+    "calling about your admission enquiry. Is this a good time?"
 )
 
 
@@ -498,6 +528,20 @@ class Priya(Agent):
             except Exception as e:  # noqa: BLE001
                 logger.debug(f"history truncate skipped: {e}")
 
+    # Short, live summary of everything collected so far — injected each turn so Priya
+    # NEVER forgets the caller's program/name/scores after history truncation (and so never
+    # re-asks something they already told her).
+    _DETAIL_LABELS = {
+        "student_name": "Name", "program_of_interest": "Program", "specialization": "Specialization",
+        "entrance_exams_taken": "Exam", "class_10_score": "Class 10 %", "class_12_score": "Class 12 %",
+        "graduation_score": "Graduation", "current_city": "City", "engagement_choice": "Next step",
+        "counselling_mode": "Counselling mode", "visit_datetime": "Booked time",
+    }
+
+    def _known_details(self) -> str:
+        parts = [f"{lbl}: {self.collected[k]}" for k, lbl in self._DETAIL_LABELS.items() if self.collected.get(k)]
+        return "; ".join(parts)
+
     # ── LLM output filter ──────────────────────────────────────────────────────
     # Clean the reply AT THE SOURCE, not just before TTS. gpt-oss tends to dump the whole
     # question flow (5 stacked questions) in one 160-token wall and sometimes TYPES a tool
@@ -506,6 +550,17 @@ class Priya(Agent):
     # Filtering here means history == exactly what was spoken, and we can CANCEL the
     # generation the moment the first question is complete — less latency, fewer tokens.
     async def llm_node(self, chat_ctx, tools, model_settings):
+        # Inject a live "known so far" note so Priya always has the caller's collected details
+        # (program, name, scores, booked slot) even after history truncation — she uses them
+        # directly instead of re-asking. Copy the ctx so this note never accumulates in history.
+        known = self._known_details()
+        if known:
+            try:
+                chat_ctx = chat_ctx.copy()
+                chat_ctx.add_message(role="system",
+                    content=f"KNOWN ABOUT THIS CALLER — do NOT re-ask these; use them directly: {known}")
+            except Exception as e:  # noqa: BLE001
+                logger.debug(f"known-details inject skipped: {e}")
         stream = Agent.default.llm_node(self, chat_ctx, tools, model_settings)
         buf = ""            # text not yet split into complete sentences
         spoken = 0          # chars emitted this turn (MAX_SPOKEN_CHARS cap)
@@ -577,6 +632,10 @@ class Priya(Agent):
     async def tts_node(self, text, model_settings):
         # Translate-out is active only when enabled AND the caller's language is non-English.
         needs_translation = TRANSLATE_OUT and bool(self._lang) and not self._lang.lower().startswith("en")
+        # Hard spoken-length cap per turn so a verbose reply can't become a 20-30s monologue
+        # that stutters over the network. Indic TTS (translate-out) runs ~2x longer per char,
+        # so cap it tighter there.
+        spoken_cap = int(MAX_SPOKEN_CHARS * 0.55) if needs_translation else MAX_SPOKEN_CHARS
 
         # llm_node already delivers clean one-question text — STREAM it sentence-by-sentence
         # so TTS starts on the first sentence (big latency win) instead of waiting for the
@@ -597,6 +656,7 @@ class Priya(Agent):
             async def produce():
                 buf = ""
                 stopped = False
+                spoken = 0          # chars emitted this turn (spoken_cap enforcement)
                 try:
                     async for chunk in text:
                         if not chunk or stopped:
@@ -612,14 +672,27 @@ class Priya(Agent):
                             buf = buf[m.end():]
                             if not sentence:
                                 continue
+                            # Length cap: if this sentence would overflow the budget, truncate it
+                            # at a word boundary, speak that, and stop — so even a single long
+                            # info-dump sentence can't run 20-30s and break up over the network.
+                            remaining = spoken_cap - spoken
+                            if len(sentence) > remaining:
+                                clipped = sentence[:remaining].rsplit(" ", 1)[0].rstrip(",;:—- ")
+                                clipped = clipped or sentence[:remaining]
+                                await queue.put(_spoken(clipped + "."))
+                                stopped = True
+                                buf = ""
+                                break
                             await queue.put(_spoken(sentence))   # fire translate now (concurrent)
-                            if "?" in sentence:   # one question per turn → stop after the first
+                            spoken += len(sentence)
+                            # Stop after the first question (one question per turn).
+                            if "?" in sentence:
                                 stopped = True
                                 buf = ""
                                 break
                     if not stopped:
                         tail = re.sub(r"\s{2,}", " ", _strip_tool_syntax(buf)).strip()
-                        if tail:
+                        if tail and spoken < spoken_cap:
                             await queue.put(_spoken(tail))
                 finally:
                     await queue.put(None)   # sentinel: no more sentences
@@ -690,12 +763,21 @@ class Priya(Agent):
 
     @function_tool()
     async def list_programs(self, context: RunContext, category: str = ""):
-        """List available programs, optionally filtered (e.g. "B.Tech", "MBA", "Pharmacy",
-        "Business", "Engineering"). Use when the caller is unsure what to study."""
+        """List the SPECIALISATION tracks under a branch/degree (synonym-aware). Use AFTER the
+        caller picks a branch — e.g. category="CSE" returns core CSE + AI&ML + Data Science +
+        the SAP/Google/Microsoft associated tracks. Also accepts "B.Tech", "MBA", "Pharmacy"."""
         names = udata.list_programs(category)
         if not names:
             return f"No programs match '{category}'. Schools: Engineering, Business, Pharmacy, Sciences."
         return "Programs" + (f" ({category})" if category else "") + ": " + "; ".join(names)
+
+    @function_tool()
+    async def list_branches(self, context: RunContext):
+        """The high-level B.Tech BRANCH list (CSE, ECE, EEE, Mechanical, Civil, etc.). Use FIRST
+        when a caller asks "what programs / courses do you offer" — read these branches, then use
+        list_programs(branch) to go deeper once they pick one. Also mention MBA, Pharmacy & Sciences exist."""
+        return "Our main B.Tech branches: " + "; ".join(udata.list_branches()) + \
+               ". We also offer MBA, Pharmacy and Science programs."
 
     @function_tool()
     async def get_placements(self, context: RunContext, year: str = "2026"):

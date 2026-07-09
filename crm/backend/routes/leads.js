@@ -10,6 +10,7 @@
 //   GET    /api/leads/meta/pipeline     stage counts for the caller's scope
 // ---------------------------------------------------------------------------
 const router = require('express').Router()
+const mongoose = require('mongoose')
 const { v4: uuidv4 } = require('uuid')
 const Lead = require('../models/Lead')
 const DNDEntry = require('../models/DNDEntry')
@@ -93,7 +94,16 @@ router.get('/', async (req, res) => {
 // ── Pipeline stage counts (for the caller's scope) ───────────────────────────
 router.get('/meta/pipeline', async (req, res) => {
   try {
+    // aggregate() does NOT auto-cast string ids to ObjectId the way find() does, so a
+    // string orgId/branchId in the scope filter would $match nothing (→ all-zero stats).
+    // Cast the id fields explicitly.
     const match = branchScopeFilter(req)
+    const castId = (v) => {
+      if (v && typeof v === 'object' && v.$in) return { $in: v.$in.map(castId) }
+      try { return new mongoose.Types.ObjectId(v) } catch { return v }
+    }
+    if (match.orgId) match.orgId = castId(match.orgId)
+    if (match.branchId) match.branchId = castId(match.branchId)
     const rows = await Lead.aggregate([
       { $match: match },
       { $group: { _id: '$status', count: { $sum: 1 } } },

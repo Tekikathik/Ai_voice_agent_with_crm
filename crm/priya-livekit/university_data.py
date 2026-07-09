@@ -296,28 +296,85 @@ def find_course(query: str):
     """Fuzzy-match what a caller says to one course. Returns the course dict or None."""
     if not query:
         return None
-    q = " " + query.lower().strip() + " "
+    ql = query.lower()
+    q = " " + ql.strip() + " "
     best, best_score = None, 0
     for c in COURSES:
         score = 0
         for kw in c.get("keywords", []):
-            if " " + kw + " " in q or kw in query.lower():
+            if " " + kw + " " in q or kw in ql:
                 score = max(score, len(kw))  # longer keyword = more specific match
+        # Industry-partner hint (SAP / Google Cloud / Microsoft…). A DISTINCTIVE signal, so
+        # boost it strongly — otherwise "CSE in association with SAP" matches plain "CSE"
+        # (both score ~3 on "cse"/"sap") and the generic course wins the tie.
+        ind = str(c.get("industry", "")).lower()
+        if ind and (ind in ql or ind.split()[0] in ql):
+            score += 20
         # Degree hint (e.g. caller says "M.Tech CSE" vs "B.Tech CSE")
         deg = c["degree"].lower().replace(".", "").replace(" ", "")
-        if deg and deg in query.lower().replace(".", "").replace(" ", ""):
+        if deg and deg in ql.replace(".", "").replace(" ", ""):
             score += 2
         if score > best_score:
             best, best_score = c, score
     return best if best_score > 0 else None
 
 
+# Concise, spoken-friendly top-level B.Tech branches — read these out FIRST when a caller
+# asks "what do you offer", before drilling into a branch's specialisation tracks.
+BTECH_BRANCHES = [
+    "Computer Science & Engineering (CSE)",
+    "CSE – AI & Machine Learning",
+    "CSE – Data Science",
+    "Electronics & Communication (ECE)",
+    "Electrical & Electronics (EEE)",
+    "Mechanical Engineering",
+    "Civil Engineering",
+    "Agricultural Engineering",
+    "Mining Engineering",
+    "Petroleum Technology",
+]
+
+# Branch synonyms so a filter like "cse" also matches "Computer Science & Engineering",
+# "electrical" matches "Electrical & Electronics", etc.
+BRANCH_SYNONYMS = {
+    "cse":   ["cse", "computer science", "computer"],
+    "aiml":  ["aiml", "ai & ml", "ai and ml", "artificial intelligence", "machine learning"],
+    "ds":    ["data science", "data-science"],
+    "ece":   ["ece", "electronics & communication", "electronics and communication"],
+    "eee":   ["eee", "electrical"],
+    "mech":  ["mechanical", "mech"],
+    "civil": ["civil"],
+    "agri":  ["agricultural", "agriculture", "agri"],
+    "mining": ["mining"],
+    "petro": ["petroleum", "petro"],
+}
+
+
+def _expand_filter(f: str) -> set:
+    """Grow a raw filter into all synonyms of its branch, so 'cse' also finds 'Computer Science'."""
+    f = f.lower().strip()
+    terms = {f} if f else set()
+    for key, syns in BRANCH_SYNONYMS.items():
+        if f == key or any(s == f or s in f or f in s for s in syns):
+            terms.update(syns)
+    return terms
+
+
+def list_branches() -> list:
+    """The concise top-level B.Tech branch list (for the first, high-level answer)."""
+    return list(BTECH_BRANCHES)
+
+
 def list_programs(filter_text: str = ""):
-    """List program names, optionally filtered by degree or school keyword."""
+    """List program names, optionally filtered by branch/degree/school (synonym-aware)."""
     f = filter_text.lower().strip()
+    if not f:
+        return [c["name"] for c in COURSES]
+    terms = _expand_filter(f) or {f}
     out = []
     for c in COURSES:
-        if not f or f in c["degree"].lower() or f in c["school"].lower() or f in c["name"].lower():
+        hay = f"{c['name']} {c['degree']} {c['school']}".lower()
+        if any(t in hay for t in terms):
             out.append(c["name"])
     return out
 

@@ -15,7 +15,7 @@ const NAV_ORG = [
   { path: '/dashboard/leads',        label: 'Leads',         icon: ClipboardList },
   { path: '/dashboard/branches',     label: 'Branches',      icon: Building2 },
   { path: '/dashboard/crm-analytics', label: 'CRM Analytics', icon: BarChart3 },
-  { path: '/dashboard/marketing',    label: 'Marketing',     icon: Megaphone },
+  { path: '/dashboard/appointments', label: 'Appointments',  icon: CalendarCheck },
   { path: '/dashboard/competitive',  label: 'Competitive Intel', icon: Target },
   { path: '/dashboard/live',         label: 'Priya AI',      icon: Activity },
   { path: '/dashboard/audit',        label: 'Audit Log',     icon: ShieldCheck },
@@ -26,7 +26,7 @@ const NAV_ORG = [
 // Branch officer: their leads + their branch's audit.
 const NAV_OFFICER = [
   { path: '/dashboard/leads',     label: 'My Leads',  icon: ClipboardList },
-  { path: '/dashboard/marketing', label: 'Marketing', icon: Megaphone },
+  { path: '/dashboard/appointments', label: 'Appointments', icon: CalendarCheck },
   { path: '/dashboard/audit',     label: 'Activity',  icon: ShieldCheck },
   { path: '/dashboard/profile', label: 'Profile',   icon: UserIcon },
   { path: '/dashboard/settings', label: 'Settings', icon: Settings },
@@ -52,6 +52,7 @@ function buildNav(user) {
     return [
       { path: '/dashboard/leads',         label: 'Leads',         icon: ClipboardList },
       { path: '/dashboard/crm-analytics', label: 'CRM Analytics', icon: BarChart3 },
+      { path: '/dashboard/appointments',  label: 'Appointments',  icon: CalendarCheck },
       { path: '/dashboard/audit',         label: 'Audit Log',     icon: ShieldCheck },
       { path: '/dashboard/profile',       label: 'Profile',       icon: UserIcon },
       { path: '/dashboard/settings',      label: 'Settings',      icon: Settings },

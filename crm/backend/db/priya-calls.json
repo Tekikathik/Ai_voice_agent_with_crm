@@ -1,5 +1,705 @@
 [
   {
+    "session_id": "7a877051-2fed-47d8-8a8f-aa06c35ff50e",
+    "phone": "+918249776759",
+    "name": "New Contact",
+    "started_at": "2026-07-09T12:54:24.263Z",
+    "duration": 247,
+    "steps_completed": 0,
+    "status": "completed",
+    "detected_language": "en-IN",
+    "collected": {
+      "name": "New Contact",
+      "marks_10": null,
+      "marks_inter": null,
+      "interest": null,
+      "location": null
+    },
+    "transcript": [
+      {
+        "role": "Priya",
+        "text": "Hello! This is Priya from Aditya University, calling about your admission enquiry. Is this a good time?",
+        "timestamp": "2026-07-09T12:54:40.861Z"
+      },
+      {
+        "role": "Student",
+        "text": "Yes, you can talk with me.",
+        "timestamp": "2026-07-09T12:54:45.595Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Great! Which program or course are you interested in for 2026-27?",
+        "timestamp": "2026-07-09T12:54:55.753Z"
+      },
+      {
+        "role": "Student",
+        "text": "Yes, I am interested in like",
+        "timestamp": "2026-07-09T12:55:05.344Z"
+      },
+      {
+        "role": "Student",
+        "text": "Like in the B.Tech program, I am interested. You are not asking about this program, you are directly switching to the course. What is this?",
+        "timestamp": "2026-07-09T12:55:09.590Z"
+      },
+      {
+        "role": "Priya",
+        "text": "I'm happy you're interested in B.Tech! To help you better, could you tell me which specific branch of B.Tech you're looking at—like Computer Science, Electronics, Mechanical, or another?",
+        "timestamp": "2026-07-09T12:55:23.758Z"
+      },
+      {
+        "role": "Student",
+        "text": "Yeah, I'm looking for the computer, like computer science engineering. Could you please tell me what are the in-depth computer science specializations you offer?",
+        "timestamp": "2026-07-09T12:55:37.247Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Great! For Computer Science & Engineering, we offer several specializations. Let me get the detailed list for you.",
+        "timestamp": "2026-07-09T12:55:54.895Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Great! Here are the Computer Science & Engineering specializations we offer for B.Tech: - B.Tech – Computer Science & Engineering (CSE) - B.Tech – CSE (Data Science) - B.Tech – CSE in association with SAP - B.Tech – CSE in association with Google Cloud - B.Tech – CSE (Data Science) in association with Google Cloud",
+        "timestamp": "2026-07-09T12:56:15.307Z"
+      },
+      {
+        "role": "Student",
+        "text": "Okay, I want to like know about",
+        "timestamp": "2026-07-09T12:56:25.198Z"
+      },
+      {
+        "role": "Student",
+        "text": "What the association with like SAP or Google, what is the meaning like? What do you provide?",
+        "timestamp": "2026-07-09T12:56:30.335Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Great question! Those are industry-aligned specializations where we partner with industry leaders to design a curriculum that includes their tools, technologies, and real-world projects—so you graduate with skills they actually use. For example:\n- CSE in association with SAP: You’ll work on SAP’s enterprise software (like ERP, S/4HANA) used by top companies worldwide, with access to their learning resources and potential certification paths.",
+        "timestamp": "2026-07-09T12:56:59.701Z"
+      },
+      {
+        "role": "Student",
+        "text": "Okay",
+        "timestamp": "2026-07-09T12:57:07.984Z"
+      },
+      {
+        "role": "Student",
+        "text": "It's good, but tell me what are the fee structures of all this?",
+        "timestamp": "2026-07-09T12:57:10.643Z"
+      },
+      {
+        "role": "Student",
+        "text": "like association with SAP or Google",
+        "timestamp": "2026-07-09T12:57:11.449Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Great! Here are the fee details for the B.Tech CSE (Data Science) specialisation: - Tuition fee: ₹2.00 lakh per year - One-time admission fee: ₹15,000 (non-refundable) - ASAT exam fee: ₹500 per attempt (max 2 attempts) - Hostel (optional):",
+        "timestamp": "2026-07-09T12:57:36.703Z"
+      },
+      {
+        "role": "Student",
+        "text": "Okay, but I want like what are the like",
+        "timestamp": "2026-07-09T12:57:48.596Z"
+      },
+      {
+        "role": "Student",
+        "text": "You don't even asking my name, what, what.",
+        "timestamp": "2026-07-09T12:57:49.544Z"
+      },
+      {
+        "role": "Priya",
+        "text": "I’m really sorry for not asking your name first — let me fix that right away. Could you please tell me your name?",
+        "timestamp": "2026-07-09T12:57:57.296Z"
+      }
+    ],
+    "summary": null,
+    "disposition": null,
+    "sentiment": null,
+    "interested": null
+  },
+  {
+    "session_id": "66939072-bc8e-4403-8261-d31869bb119d",
+    "phone": "+918249776759",
+    "name": "New Contact",
+    "started_at": "2026-07-09T12:45:36.687Z",
+    "duration": 133,
+    "steps_completed": 0,
+    "status": "completed",
+    "detected_language": "en-IN",
+    "collected": {
+      "name": "New Contact",
+      "marks_10": null,
+      "marks_inter": null,
+      "interest": null,
+      "location": null
+    },
+    "transcript": [
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:46:57.305Z"
+      },
+      {
+        "role": "Student",
+        "text": "My name is Rahul Sharma",
+        "timestamp": "2026-07-09T12:47:00.814Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:02.024Z"
+      },
+      {
+        "role": "Student",
+        "text": "I got 85 percent in 10th",
+        "timestamp": "2026-07-09T12:47:05.528Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:06.737Z"
+      },
+      {
+        "role": "Student",
+        "text": "Inter marks are 78 percent",
+        "timestamp": "2026-07-09T12:47:10.251Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:11.460Z"
+      },
+      {
+        "role": "Student",
+        "text": "I am interested in B.Tech Computer Science",
+        "timestamp": "2026-07-09T12:47:14.962Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:16.168Z"
+      },
+      {
+        "role": "Student",
+        "text": "What are the fee details?",
+        "timestamp": "2026-07-09T12:47:19.667Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:21.997Z"
+      },
+      {
+        "role": "Student",
+        "text": "Have I appeared in JEE? Yes, I got 120 marks",
+        "timestamp": "2026-07-09T12:47:25.507Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:27.513Z"
+      },
+      {
+        "role": "Student",
+        "text": "Is there any scholarship available?",
+        "timestamp": "2026-07-09T12:47:31.024Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:33.092Z"
+      },
+      {
+        "role": "Student",
+        "text": "I am from Hyderabad",
+        "timestamp": "2026-07-09T12:47:36.594Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:37.796Z"
+      },
+      {
+        "role": "Student",
+        "text": "Do you have bus facility from Ameerpet?",
+        "timestamp": "2026-07-09T12:47:41.300Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:43.827Z"
+      },
+      {
+        "role": "Student",
+        "text": "No more questions, thank you",
+        "timestamp": "2026-07-09T12:47:47.333Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Am I speaking with the student, or a parent?",
+        "timestamp": "2026-07-09T12:47:48.544Z"
+      }
+    ],
+    "summary": "The student, Rahul Sharma, provided his academic scores, expressed interest in B.Tech Computer Science, asked about fees, scholarships, and bus facilities, and concluded the call with no further questions.",
+    "disposition": "interested",
+    "sentiment": "positive",
+    "interested": true
+  },
+  {
+    "session_id": "8a9f51cd-be23-420f-9d25-68e5b820a909",
+    "phone": "+917782853453",
+    "name": "New Contact",
+    "started_at": "2026-07-08T12:45:34.887Z",
+    "duration": 54,
+    "steps_completed": 0,
+    "status": "completed",
+    "detected_language": "en-IN",
+    "collected": {
+      "name": "New Contact",
+      "marks_10": null,
+      "marks_inter": null,
+      "interest": null,
+      "location": null
+    },
+    "transcript": [
+      {
+        "role": "Priya",
+        "text": "Hello! This is Priya from Aditya University, calling about your admission enquiry. Is this a good time?",
+        "timestamp": "2026-07-08T12:45:51.826Z"
+      },
+      {
+        "role": "Student",
+        "text": "Yes",
+        "timestamp": "2026-07-08T12:45:56.175Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Which program or course are you interested in?",
+        "timestamp": "2026-07-08T12:46:01.317Z"
+      },
+      {
+        "role": "Student",
+        "text": "નામ શું છે?",
+        "timestamp": "2026-07-08T12:46:08.541Z"
+      }
+    ],
+    "summary": "Priya introduced herself and asked if it was a good time to discuss the admission enquiry. The student responded affirmatively and asked a question about the name.",
+    "disposition": "interested",
+    "sentiment": "neutral",
+    "interested": true
+  },
+  {
+    "session_id": "09f91b2c-b32a-4378-b959-3af0cd6bc66e",
+    "phone": "+917782853453",
+    "name": "Prince",
+    "started_at": "2026-07-08T12:20:30.265Z",
+    "duration": 244,
+    "steps_completed": 3,
+    "status": "completed",
+    "detected_language": "en-IN",
+    "collected": {
+      "name": "Prince",
+      "marks_10": "81.8%",
+      "marks_inter": "89%",
+      "interest": null,
+      "location": null,
+      "student_name": "Prince",
+      "class_10_score": "81.8%",
+      "class_12_score": "89%"
+    },
+    "transcript": [
+      {
+        "role": "Priya",
+        "text": "Hello! This is Priya calling from Aditya University. You had shown interest in admissions for the 2026-27 academic year, so I'm calling to help guide you through it. Could I take just two or three minutes of your time?",
+        "timestamp": "2026-07-08T12:20:54.900Z"
+      },
+      {
+        "role": "Student",
+        "text": "हाँ, बिल्कुल।",
+        "timestamp": "2026-07-08T12:20:58.522Z"
+      },
+      {
+        "role": "Priya",
+        "text": "May I know your name, please?",
+        "timestamp": "2026-07-08T12:21:02.189Z"
+      },
+      {
+        "role": "Student",
+        "text": "मेरा नाम प्रिंस है।",
+        "timestamp": "2026-07-08T12:21:06.067Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Nice to meet you, Prince. Which B.Tech branch are you interested in—perhaps CSE, ECE, Mechanical, or another?",
+        "timestamp": "2026-07-08T12:21:16.724Z"
+      },
+      {
+        "role": "Student",
+        "text": "हाँ, मुझे बीटेक में सीएसी।",
+        "timestamp": "2026-07-08T12:21:21.567Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Great! So you’re interested in BCA—Bachelor of Computer Applications. Is that correct?",
+        "timestamp": "2026-07-08T12:21:30.724Z"
+      },
+      {
+        "role": "Student",
+        "text": "नहीं बीसीए नहीं बीटेक",
+        "timestamp": "2026-07-08T12:21:34.395Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Got it, you’d like B.Tech in Computer Science & Engineering. Would you prefer the core CSE program, or a specialization like AI & ML, Data Science, or the SAP/Google Cloud track?",
+        "timestamp": "2026-07-08T12:21:49.858Z"
+      },
+      {
+        "role": "Student",
+        "text": "नहीं, कोई नहीं है।",
+        "timestamp": "2026-07-08T12:21:50.942Z"
+      },
+      {
+        "role": "Student",
+        "text": "Core CSE",
+        "timestamp": "2026-07-08T12:21:53.827Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Excellent choice, Prince. Do you have any entrance exams you’ve taken, like JEE, NEET, or state exams?",
+        "timestamp": "2026-07-08T12:22:01.485Z"
+      },
+      {
+        "role": "Student",
+        "text": "जी नहीं, मैं मैनेजमेंट के थ्रू जाना चाहता हूँ।",
+        "timestamp": "2026-07-08T12:22:07.485Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Understood. Have you taken any management entrance exam such as CAT, MAT, or CMAT?",
+        "timestamp": "2026-07-08T12:22:22.481Z"
+      },
+      {
+        "role": "Student",
+        "text": "जी नहीं।",
+        "timestamp": "2026-07-08T12:22:25.644Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Could you share your Class 10 and Class 12 percentages, please?",
+        "timestamp": "2026-07-08T12:22:31.228Z"
+      },
+      {
+        "role": "Student",
+        "text": "मेरा क्लास 10th में 81.8% आया था।",
+        "timestamp": "2026-07-08T12:22:39.603Z"
+      },
+      {
+        "role": "Priya",
+        "text": "81.8%—that’s a solid base, well done! And your",
+        "timestamp": "2026-07-08T12:22:47.759Z"
+      },
+      {
+        "role": "Student",
+        "text": "Point",
+        "timestamp": "2026-07-08T12:22:47.999Z"
+      },
+      {
+        "role": "Priya",
+        "text": "What was your Class 12 percentage?",
+        "timestamp": "2026-07-08T12:22:51.725Z"
+      },
+      {
+        "role": "Student",
+        "text": "मेरा क्लास 12th में 89% आया था।",
+        "timestamp": "2026-07-08T12:22:57.537Z"
+      },
+      {
+        "role": "Student",
+        "text": "मेरा क्लास 12th में 89% आया था।",
+        "timestamp": "2026-07-08T12:23:10.118Z"
+      },
+      {
+        "role": "Priya",
+        "text": "89%—that’s excellent, congratulations! Which city are you currently residing in?",
+        "timestamp": "2026-07-08T12:23:23.016Z"
+      },
+      {
+        "role": "Student",
+        "text": "मैं Bihar से हूँ",
+        "timestamp": "2026-07-08T12:23:27.233Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Great, Bihar it is. Would you like to schedule a campus visit, a virtual tour, or a counselling session?",
+        "timestamp": "2026-07-08T12:23:35.770Z"
+      },
+      {
+        "role": "Student",
+        "text": "मुझे ट्यूशन फी के बारे में जानकारी चाहिए।",
+        "timestamp": "2026-07-08T12:23:41.307Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Sure! Which B.Tech branch or program are you interested in (e.g., CSE, ECE, Mechanical)?",
+        "timestamp": "2026-07-08T12:23:49.516Z"
+      },
+      {
+        "role": "Student",
+        "text": "Computer Science Core",
+        "timestamp": "2026-07-08T12:23:57.185Z"
+      },
+      {
+        "role": "Priya",
+        "text": "The tuition for Core CSE is ₹2.75 lakh per year. Admission fee is ₹15,000 one‑time, and ASAT fee ₹500 per attempt. Hostel costs are ₹1.15 lakh (non‑AC) or",
+        "timestamp": "2026-07-08T12:24:10.149Z"
+      }
+    ],
+    "summary": "Priya introduced herself and asked about the student's interests. The student clarified they want a B.Tech in Computer Science (core), provided academic percentages, and requested tuition fee details.",
+    "disposition": "interested",
+    "sentiment": "positive",
+    "interested": true
+  },
+  {
+    "session_id": "6a810d71-0bfd-4a74-8c84-644cc6c7ff24",
+    "phone": "+917782853453",
+    "name": "Prince",
+    "started_at": "2026-07-08T12:10:11.791Z",
+    "duration": 268,
+    "steps_completed": 11,
+    "status": "completed",
+    "detected_language": "hi-IN",
+    "collected": {
+      "name": "Prince",
+      "marks_10": "81.8%",
+      "marks_inter": "89%",
+      "interest": "Management",
+      "location": "Bihar",
+      "student_name": "Prince",
+      "program_of_interest": "Management",
+      "specialization": "Core CSE",
+      "entrance_exams_taken": "JEE",
+      "willing_university_exam": "No",
+      "class_10_score": "81.8%",
+      "class_12_score": "89%",
+      "current_city": "Bihar",
+      "engagement_choice": "campus_visit",
+      "visit_datetime": "2 August",
+      "booked_time": "2 August",
+      "call_outcome": "interested"
+    },
+    "transcript": [
+      {
+        "role": "Priya",
+        "text": "Hello! This is Priya calling from Aditya University. You had shown interest in admissions for the 2026-27 academic year, so I'm calling to help guide you through it. Could I take just two or three minutes of your time?",
+        "timestamp": "2026-07-08T12:10:36.862Z"
+      },
+      {
+        "role": "Student",
+        "text": "Yes",
+        "timestamp": "2026-07-08T12:10:40.123Z"
+      },
+      {
+        "role": "Priya",
+        "text": "May I know your name, please?",
+        "timestamp": "2026-07-08T12:10:42.363Z"
+      },
+      {
+        "role": "Student",
+        "text": "My name is Prince",
+        "timestamp": "2026-07-08T12:10:46.157Z"
+      },
+      {
+        "role": "Priya",
+        "text": "What program are you interested in, Prince?",
+        "timestamp": "2026-07-08T12:10:49.914Z"
+      },
+      {
+        "role": "Student",
+        "text": "I am interested in B.Tech",
+        "timestamp": "2026-07-08T12:10:54.756Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Which one of these branches interests you, Prince?",
+        "timestamp": "2026-07-08T12:10:58.982Z"
+      },
+      {
+        "role": "Student",
+        "text": "I am interested in computer science",
+        "timestamp": "2026-07-08T12:11:14.592Z"
+      },
+      {
+        "role": "Priya",
+        "text": "We have several",
+        "timestamp": "2026-07-08T12:11:18.736Z"
+      },
+      {
+        "role": "Student",
+        "text": "Okay",
+        "timestamp": "2026-07-08T12:11:18.955Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Which CSE program interests you, Prince?",
+        "timestamp": "2026-07-08T12:11:22.711Z"
+      },
+      {
+        "role": "Student",
+        "text": "Core CSE",
+        "timestamp": "2026-07-08T12:11:27.363Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Have you taken any entrance exams, Prince?",
+        "timestamp": "2026-07-08T12:11:31.057Z"
+      },
+      {
+        "role": "Student",
+        "text": "नौ",
+        "timestamp": "2026-07-08T12:11:34.688Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Would you be willing to take our university's entrance exam, Prince?",
+        "timestamp": "2026-07-08T12:11:40.202Z"
+      },
+      {
+        "role": "Student",
+        "text": "No",
+        "timestamp": "2026-07-08T12:11:45.633Z"
+      },
+      {
+        "role": "Student",
+        "text": "I want to take admission through management",
+        "timestamp": "2026-07-08T12:11:47.858Z"
+      },
+      {
+        "role": "Priya",
+        "text": "What's your Class 10 percentage, Prince?",
+        "timestamp": "2026-07-08T12:11:51.857Z"
+      },
+      {
+        "role": "Student",
+        "text": "Uh, I got 81.8%.",
+        "timestamp": "2026-07-08T12:11:57.993Z"
+      },
+      {
+        "role": "Priya",
+        "text": "And your Class 12 percentage?",
+        "timestamp": "2026-07-08T12:12:01.512Z"
+      },
+      {
+        "role": "Student",
+        "text": "Okay",
+        "timestamp": "2026-07-08T12:12:05.994Z"
+      },
+      {
+        "role": "Student",
+        "text": "In 12th I got 89%",
+        "timestamp": "2026-07-08T12:12:06.851Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Which city are you currently living in, Prince?",
+        "timestamp": "2026-07-08T12:12:12.062Z"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm",
+        "timestamp": "2026-07-08T12:12:16.458Z"
+      },
+      {
+        "role": "Student",
+        "text": "I am from Bihar",
+        "timestamp": "2026-07-08T12:12:17.210Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Would you like to visit our campus, take a virtual tour, or have a counselling session, Prince?",
+        "timestamp": "2026-07-08T12:12:24.255Z"
+      },
+      {
+        "role": "Student",
+        "text": "First of all, I want to know about boys' hostel facility.",
+        "timestamp": "2026-07-08T12:12:31.871Z"
+      },
+      {
+        "role": "Priya",
+        "text": "The boys’ hostel offers AC and non‑AC rooms, triple‑sharing with attached bath and balcony, plus a gym with trainer and laundry services. Want to schedule a campus visit to see it?",
+        "timestamp": "2026-07-08T12:12:45.955Z"
+      },
+      {
+        "role": "Student",
+        "text": "यह कॉलेज का लोकेशन कहाँ पर है?",
+        "timestamp": "2026-07-08T12:12:55.284Z"
+      },
+      {
+        "role": "Priya",
+        "text": "Our campus is in Surampalem, Kakinada District, Andhra Pradesh—about 250 acres with modern facilities. Would you prefer a campus visit, a virtual tour, or a counselling session?",
+        "timestamp": "2026-07-08T12:13:12.749Z"
+      },
+      {
+        "role": "Student",
+        "text": "B.Tech CSE का फी क्या है?",
+        "timestamp": "2026-07-08T12:13:18.077Z"
+      },
+      {
+        "role": "Priya",
+        "text": "The tuition fee for B.Tech CSE is ₹2.75 lakh per year, plus a one-time admission fee of ₹15,000. Want to know about the scholarship you're eligible for?",
+        "timestamp": "2026-07-08T12:13:33.795Z"
+      },
+      {
+        "role": "Student",
+        "text": "और होस्टल फी क्या है?",
+        "timestamp": "2026-07-08T12:13:38.384Z"
+      },
+      {
+        "role": "Priya",
+        "text": "The hostel fee is ₹1.15 lakh per year for non-AC and ₹1.30 lakh per year for AC. Would you like to proceed with a campus visit or counselling, Prince?",
+        "timestamp": "2026-07-08T12:13:55.173Z"
+      },
+      {
+        "role": "Student",
+        "text": "मैं कैंपस विज़िट करना चाहता हूँ।",
+        "timestamp": "2026-07-08T12:14:01.287Z"
+      },
+      {
+        "role": "Priya",
+        "text": "When would you like to visit, Prince—say, this Saturday?",
+        "timestamp": "2026-07-08T12:14:07.154Z"
+      },
+      {
+        "role": "Student",
+        "text": "मैं कैंपस",
+        "timestamp": "2026-07-08T12:14:12.569Z"
+      },
+      {
+        "role": "Student",
+        "text": "2 August",
+        "timestamp": "2026-07-08T12:14:15.668Z"
+      },
+      {
+        "role": "Priya",
+        "text": "We've arranged your campus visit for 2 August, Prince. Thank you, and we'll see you then!",
+        "timestamp": "2026-07-08T12:14:26.283Z"
+      },
+      {
+        "role": "Student",
+        "text": "Thank you",
+        "timestamp": "2026-07-08T12:14:30.535Z"
+      },
+      {
+        "role": "Priya",
+        "text": "You're welcome, Prince! Have a great day!",
+        "timestamp": "2026-07-08T12:14:36.033Z"
+      }
+    ],
+    "summary": null,
+    "disposition": null,
+    "sentiment": null,
+    "interested": null
+  },
+  {
     "session_id": "2387c940-15c3-4f7a-831f-23a8acf1e231",
     "phone": "+918249776759",
     "name": "Prince",
@@ -5017,56 +5717,6 @@
     "started_at": "2026-06-13T07:40:55.597Z",
     "duration": 65,
     "steps_completed": 8,
-    "status": "completed",
-    "detected_language": "en-IN"
-  },
-  {
-    "session_id": "e522fa91-5138-41c5-be3a-320fb955dbcc",
-    "phone": "+918249776759",
-    "name": "going",
-    "started_at": "2026-06-13T06:58:28.827Z",
-    "duration": 247,
-    "steps_completed": 8,
-    "status": "completed",
-    "detected_language": "en-IN"
-  },
-  {
-    "session_id": "3efff341-0c50-442d-a76f-166231822cc8",
-    "phone": "+918249776759",
-    "name": "Karthik",
-    "started_at": "2026-06-13T06:51:07.260Z",
-    "duration": 198,
-    "steps_completed": 10,
-    "status": "completed",
-    "detected_language": "hi-IN"
-  },
-  {
-    "session_id": "c2589441-8861-42b0-8ed4-f00a1975038f",
-    "phone": "+918249776759",
-    "name": "Unknown",
-    "started_at": "2026-06-13T06:50:07.524Z",
-    "duration": 45,
-    "steps_completed": 1,
-    "status": "completed",
-    "detected_language": "en-IN"
-  },
-  {
-    "session_id": "32d17e66-31f0-45a4-bc6d-392b6d744848",
-    "phone": "+918249776759",
-    "name": "Karthik",
-    "started_at": "2026-06-13T06:49:07.973Z",
-    "duration": 49,
-    "steps_completed": 2,
-    "status": "completed",
-    "detected_language": "en-IN"
-  },
-  {
-    "session_id": "ae087257-59d5-411d-9e98-719e640f3828",
-    "phone": "+918249776759",
-    "name": "Karthik",
-    "started_at": "2026-06-13T05:16:42.795Z",
-    "duration": 54,
-    "steps_completed": 3,
     "status": "completed",
     "detected_language": "en-IN"
   }

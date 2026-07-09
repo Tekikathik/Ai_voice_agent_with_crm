@@ -80,6 +80,13 @@ router.get('/', async (req, res) => {
     else filter = branchScopeFilter(req)
     if (req.query.status) filter.status = req.query.status
     if (req.query.branchId && (u.role === 'admin' || u.role === 'college_admin')) filter.branchId = req.query.branchId
+    // Date-range filter on scheduledFor (from/to are ISO strings). Lets admins view
+    // today / tomorrow / yesterday / any custom date range.
+    if (req.query.from || req.query.to) {
+      filter.scheduledFor = {}
+      if (req.query.from) filter.scheduledFor.$gte = new Date(req.query.from)
+      if (req.query.to)   filter.scheduledFor.$lte = new Date(req.query.to)
+    }
 
     const items = await Appointment.find(filter).sort({ scheduledFor: 1 })
       .populate('branchId', 'name code state').populate('leadId', 'name phone status').lean()

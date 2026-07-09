@@ -18,7 +18,7 @@ import Branches from './pages/Branches'
 import CrmAnalytics from './pages/CrmAnalytics'
 import AuditLog from './pages/AuditLog'
 import CompetitiveIntel from './pages/CompetitiveIntel'
-import Marketing from './pages/Marketing'
+import Appointments from './pages/Appointments'
 import StudentPortal from './pages/StudentPortal'
 import { useStore } from './store/useStore'
 
@@ -146,8 +146,8 @@ export default function App() {
         {/* Competitive Intelligence — main office (admin) only */}
         <Route path="/dashboard/competitive"   element={<RoleRoute allow={['admin']}><CompetitiveIntel /></RoleRoute>} />
 
-        {/* Marketing Agent Suite — admin + officer (branch-scoped) */}
-        <Route path="/dashboard/marketing"     element={<RoleRoute allow={['admin', 'officer', 'college_admin']}><Marketing /></RoleRoute>} />
+        {/* Appointments — admin + officer + college_admin (branch-scoped) */}
+        <Route path="/dashboard/appointments"  element={<RoleRoute allow={['admin', 'officer', 'college_admin']}><Appointments /></RoleRoute>} />
 
         {/* Student portal */}
         <Route path="/dashboard/student" element={<RoleRoute allow={['student']}><StudentPortal /></RoleRoute>} />
